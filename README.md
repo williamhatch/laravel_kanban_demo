@@ -139,7 +139,17 @@ php artisan test
 
 ### Test Coverage
 
-To generate a test coverage report, you need **Xdebug** installed and enabled in your PHP environment.
+To generate a test coverage report, you first need to install and enable **Xdebug** in your PHP environment.
+
+**1. Install Xdebug:**
+
+The recommended way is using PECL:
+```bash
+pecl install xdebug
+```
+Then, make sure you enable it in your `php.ini` file by adding the line `zend_extension=xdebug`.
+
+**2. Run Coverage Report:**
 
 Once Xdebug is set up, run the following command:
 
