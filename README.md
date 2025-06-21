@@ -7,55 +7,157 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# Laravel Kanban Board
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A simple, interactive Kanban board application built with Laravel and vanilla JavaScript. This project serves as a demonstration of Laravel best practices, including the use of Policies, Form Requests, and a clean, maintainable code structure.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **User Authentication:** Secure user registration and login.
+- **Board Management:** Create, edit, and delete Kanban boards.
+- **Interactive Lists & Cards:**
+  - Default lists (`To Do`, `In Progress`, `Done`) are created with each new board.
+  - Add, edit, and delete cards within lists.
+  - Drag-and-drop cards between lists to update their status.
+- **Authorization:** Users can only view and manage their own boards.
+- **Validation:** Robust server-side validation using Form Requests.
 
-## Learning Laravel
+## 🛠️ Tech Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+This project is built on the TALL stack philosophy, but with a vanilla JS frontend for simplicity.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```mermaid
+graph TD;
+    subgraph "Frontend"
+        F1[Blade Templates];
+        F2[Vanilla JavaScript];
+        F3[Sortable.js for Drag & Drop];
+        F4[Bootstrap CSS];
+    end
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    subgraph "Backend"
+        B1[Laravel 12];
+        B2[PHP 8.2+];
+    end
 
-## Laravel Sponsors
+    subgraph "Database"
+        D1[SQLite];
+    end
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    F1 & F2 & F3 & F4 --> B1;
+    B1 --> D1;
+```
 
-### Premium Partners
+## 🚀 Getting Started
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Follow these instructions to get a copy of the project up and running on your local machine.
 
-## Contributing
+### Prerequisites
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- A local web server environment (e.g., Laravel Valet, Herd, or `php artisan serve`)
 
-## Code of Conduct
+### Installation & Setup
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1.  **Clone the repository:**
+    ```bash
+    git clone git@github.com:williamhatch/laravel_kanban_demo.git
+    cd laravel_kanban_demo
+    ```
 
-## Security Vulnerabilities
+2.  **Install dependencies:**
+    ```bash
+    composer install
+    npm install
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3.  **Set up your environment file:**
+    ```bash
+    cp .env.example .env
+    ```
 
-## License
+4.  **Generate an application key:**
+    ```bash
+    php artisan key:generate
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5.  **Create the SQLite database file:**
+    ```bash
+    touch database/database.sqlite
+    ```
+    *Note: The `.env` file is pre-configured to use this SQLite database.*
+
+6.  **Run database migrations:**
+    ```bash
+    php artisan migrate
+    ```
+
+7.  **Build frontend assets:**
+    ```bash
+    npm run dev
+    ```
+
+8.  **Run the development server:**
+    In a separate terminal, run:
+    ```bash
+    php artisan serve
+    ```
+
+You can now access the application at **http://localhost:8000**.
+
+## ✅ Testing
+
+This project uses PHPUnit for testing.
+
+### Running the Test Suite
+
+To run the full test suite, use the following command:
+
+```bash
+php artisan test
+```
+
+### Running Tests in Watch Mode
+
+> **Can tests be run in watch mode?**
+>
+> Yes! While PHPUnit doesn't have a built-in watch mode, you can use a tool like [Pest](https://pestphp.com/) (which is compatible with PHPUnit tests) or a file watcher.
+>
+> For a simple, dependency-free approach, you can use a command-line file watcher like `chokidar-cli`.
+>
+> 1.  **Install `chokidar-cli` globally:**
+>     ```bash
+>     npm install -g chokidar-cli
+>     ```
+> 2.  **Run this command in your project root:**
+>     ```bash
+>     chokidar "**/*.php" -c "clear && php artisan test"
+>     ```
+> This command will watch all `.php` files and re-run your test suite whenever a file is changed.
+
+### Test Coverage
+
+To generate a test coverage report, you need **Xdebug** installed and enabled in your PHP environment.
+
+Once Xdebug is set up, run the following command:
+
+```bash
+php artisan test --coverage
+```
+
+This will display a coverage summary in your terminal. For a more detailed HTML report, you can configure `phpunit.xml`.
+
+## 🤝 Contributing
+
+We welcome contributions! If you find a bug or have a feature request, please follow these steps:
+
+1.  **Check for existing issues:** Search the [Issues](https://github.com/williamhatch/laravel_kanban_demo/issues) tab to see if your issue has already been reported.
+2.  **Open a new issue:** If it's a new issue, please open one, providing a clear title and a detailed description.
+    -   For **bugs**, include steps to reproduce, expected behavior, and actual behavior.
+    -   For **features**, describe the proposed functionality and its benefits.
+
+## 📄 License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
