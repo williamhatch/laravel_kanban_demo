@@ -151,13 +151,13 @@ Then, make sure you enable it in your `php.ini` file by adding the line `zend_ex
 
 **2. Run Coverage Report:**
 
-Once Xdebug is set up, run the following command:
+Once Xdebug is set up, simply run the test suite with the coverage flag:
 
 ```bash
 php artisan test --coverage
 ```
 
-This will display a coverage summary in your terminal. For a more detailed HTML report, you can configure `phpunit.xml`.
+This will generate a detailed HTML report inside the `tests/coverage/` directory. Open the `index.html` file in that directory to explore the report. It will also display a summary directly in your terminal.
 
 ## 🤝 Contributing
 

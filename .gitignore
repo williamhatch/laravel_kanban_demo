@@ -22,3 +22,14 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/tests/coverage
+dump.rdb
+/user-uploads
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/bootstrap/cache/
+/storage/framework/
+/storage/logs/
+*.sqlite
+*.sqlite-journal
