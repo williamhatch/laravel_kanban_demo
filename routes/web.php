@@ -13,17 +13,17 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Kanban 路由
+// Kanban Routes
 Route::middleware('auth')->group(function () {
     Route::resource('boards', BoardController::class);
     
-    // 列表路由
+    // List Routes
     Route::post('boards/{board}/lists', [KanbanListController::class, 'store'])->name('lists.store');
     Route::put('lists/{list}', [KanbanListController::class, 'update'])->name('lists.update');
     Route::delete('lists/{list}', [KanbanListController::class, 'destroy'])->name('lists.destroy');
     Route::post('lists/reorder', [KanbanListController::class, 'reorder'])->name('lists.reorder');
     
-    // 卡片路由
+    // Card Routes
     Route::post('lists/{list}/cards', [CardController::class, 'store'])->name('cards.store');
     Route::get('cards/{card}', [CardController::class, 'show'])->name('cards.show');
     Route::put('cards/{card}', [CardController::class, 'update'])->name('cards.update');
