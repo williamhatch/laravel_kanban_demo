@@ -13,6 +13,11 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// Test route for debugging
+Route::put('/test-put', function () {
+    return response()->json(['message' => 'PUT request works']);
+})->middleware('auth');
+
 // Kanban Routes
 Route::middleware('auth')->group(function () {
     Route::resource('boards', BoardController::class);

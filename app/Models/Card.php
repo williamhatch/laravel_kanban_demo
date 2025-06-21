@@ -35,6 +35,6 @@ class Card extends Model
 
     public function board()
     {
-        return $this->list->board();
+        return $this->hasOneThrough(Board::class, KanbanList::class, 'id', 'id', 'list_id', 'board_id');
     }
 }

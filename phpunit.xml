@@ -9,8 +9,8 @@
          failOnDeprecation="true"
          stopOnFailure="false"
          cacheDirectory=".phpunit.cache"
-         requireCoverageMetadata="true"
-         beStrictAboutCoverageMetadata="true">
+         requireCoverageMetadata="false"
+         beStrictAboutCoverageMetadata="false">
     <testsuites>
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>

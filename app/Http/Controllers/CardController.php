@@ -61,6 +61,7 @@ class CardController extends Controller
      */
     public function show(Card $card)
     {
+        $this->authorize('view', $card);
         return response()->json($card->load('user'));
     }
 
@@ -77,16 +78,52 @@ class CardController extends Controller
      */
     public function update(Request $request, Card $card)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'priority' => 'in:low,medium,high',
-            'due_date' => 'nullable|date'
+        \Log::info('Card update method called', [
+            'card_id' => $card->id,
+            'user_id' => auth()->id(),
+            'method' => $request->method(),
+            'url' => $request->url(),
+            'request_data' => $request->all()
         ]);
 
-        $card->update($request->only(['title', 'description', 'priority', 'due_date']));
+        try {
+            $this->authorize('update', $card);
+            
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'priority' => 'in:low,medium,high',
+                'due_date' => 'nullable|date'
+            ]);
 
-        return response()->json($card->load('user'));
+            $card->update($validated);
+
+            \Log::info('Card updated successfully', [
+                'card_id' => $card->id,
+                'updated_data' => $validated
+            ]);
+            
+            return response()->json($card->load('user'));
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
+            \Log::error('Authorization failed for card update', [
+                'card_id' => $card->id,
+                'user_id' => auth()->id(),
+                'error' => $e->getMessage()
+            ]);
+            return response()->json(['error' => 'Unauthorized'], 403);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Validation failed for card update', [
+                'card_id' => $card->id,
+                'errors' => $e->errors()
+            ]);
+            return response()->json(['errors' => $e->errors()], 422);
+        } catch (\Exception $e) {
+            \Log::error('Card update error: ' . $e->getMessage(), [
+                'card_id' => $card->id,
+                'trace' => $e->getTraceAsString()
+            ]);
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -94,12 +131,15 @@ class CardController extends Controller
      */
     public function destroy(Card $card)
     {
+        $this->authorize('delete', $card);
         $card->delete();
         return response()->json(['success' => true]);
     }
 
     public function move(Request $request, Card $card)
     {
+        $this->authorize('move', $card);
+        
         $request->validate([
             'list_id' => 'required|exists:lists,id',
             'position' => 'required|integer'

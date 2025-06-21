@@ -310,6 +310,8 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         const formData = new FormData(this);
+        formData.append('_method', 'PUT');
+        
         fetch(`/cards/${currentCardId}`, {
             method: 'POST',
             headers: {

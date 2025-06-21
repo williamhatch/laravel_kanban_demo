@@ -35,6 +35,8 @@ class KanbanListController extends Controller
      */
     public function store(Request $request, Board $board)
     {
+        $this->authorize('create', [KanbanList::class, $board]);
+        
         $request->validate([
             'name' => 'required|string|max:255'
         ]);
@@ -70,6 +72,8 @@ class KanbanListController extends Controller
      */
     public function update(Request $request, KanbanList $list)
     {
+        $this->authorize('update', $list);
+        
         $request->validate([
             'name' => 'required|string|max:255'
         ]);
@@ -84,6 +88,7 @@ class KanbanListController extends Controller
      */
     public function destroy(KanbanList $list)
     {
+        $this->authorize('delete', $list);
         $list->delete();
         return response()->json(['success' => true]);
     }

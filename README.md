@@ -121,21 +121,13 @@ php artisan test
 
 ### Running Tests in Watch Mode
 
-> **Can tests be run in watch mode?**
->
-> Yes! While PHPUnit doesn't have a built-in watch mode, you can use a tool like [Pest](https://pestphp.com/) (which is compatible with PHPUnit tests) or a file watcher.
->
-> For a simple, dependency-free approach, you can use a command-line file watcher like `chokidar-cli`.
->
-> 1.  **Install `chokidar-cli` globally:**
->     ```bash
->     npm install -g chokidar-cli
->     ```
-> 2.  **Run this command in your project root:**
->     ```bash
->     chokidar "**/*.php" -c "clear && php artisan test"
->     ```
-> This command will watch all `.php` files and re-run your test suite whenever a file is changed.
+To automatically re-run the test suite whenever a PHP file is changed, you can use the `test:watch` script. This is useful for continuous testing during development.
+
+```bash
+npm run test:watch
+```
+
+This command uses `chokidar-cli` (a development dependency) to watch for file changes and will automatically run `php artisan test --coverage`, providing you with immediate feedback and an updated coverage report.
 
 ### Test Coverage
 
